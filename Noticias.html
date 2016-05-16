@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="rylsite">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Risk Your Life Private Server">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap.css.map" rel="stylesheet">
+    <script src="js/jquery.js"></script>
+
+    <script src="js/angular.js"></script>
+
+    <title>Risk Your Life Private Server</title>
+
+    <script type="text/javascript" src="js/crudangular.js"></script>
+
+</head>
+<body ng-controller = "rylsiteController">
+<style>
+    .erro{
+        border: 2px solid blue;
+    }
+</style>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1688340784778653',
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+<div class = "container-fluid">
+    <div class = "row">
+        <div class = "col-md-12">
+            <div class = "page-header">
+                <div class="header-login">
+                    <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class ="row">
+        <div class = "col-md-12">
+
+            <nav class = "navbar navbar-default navbar-inverse" role="navigation">
+                <div class="container-navbar">
+                    <div class = "navbar-header">
+
+                        <a class="navbar-brand" href="#">Home</a>
+                        <a class="navbar-brand" href="#">Downloads</a>
+                        <a class="navbar-brand" href="#">Guias</a>
+                        <a class="navbar-brand" href="#">Fórum</a>
+                        <a class="navbar-brand" href="#">Suporte</a>
+                    </div>
+                </div>
+                <div class="container-navbar-login">
+                    <div class = "navbar-header">
+                        <form class="form-horizontal" role ="form" action = "logar.php" method = "post">
+                            <div class = "form-group">
+                                <label for="usr" class="col-md-1 control-label">User:</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="usr" placeholder="Ex: Johnny2">
+                                </div>
+                                 <label for="pwd" class="col-md-1 control-label">Pass:</label>
+                                <div class="col-md-3">
+                                    <input type="password" class="form-control" id="pwd" placeholder="**********">
+                                </div>
+                                <button type="submit" class="btn" id="btn_logar">Log In</button>
+                                &nbsp; or
+                                <a href="#"><b>Register </b></a>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+</div>
+<div class = "container-fluid-with-baackground">
+    <div class="container">
+        <row>
+            <div class="col-md-9">
+                <b><h1>Ultimas notícias</h1></b>
+                <table class="table-condensed" id = "tabela" name="tablenews">
+                    <thead>
+                        <tr>
+                            <th class="coluna" style "border: 1px solid black;">
+                                Assunto
+                            </th>
+                            <th class="coluna" style "border: 1px solid black;">
+                                Mensagem
+                            </th>
+                            <th class="coluna" style "border: 1px solid black;">
+                                Data
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody ng-repeat="noticia in noticias.rows">
+                            <td>{{noticia.assunto}}</td>
+                            <td>{{noticia.corpoMsg}}</td>
+                            <td>{{noticia.dataPublicacao}}</td>
+                            <td><a><span class='glyphicon glyphicon-trash' ng-click="apagarNoticia(noticia)"></span></a></td>
+                            <td><a><span class='glyphicon glyphicon-pencil' ng-click="editarNoticia(noticia)"></span></a></td>
+                    </tbody>
+			    </table>
+                <br>
+
+            </div>
+            <br>
+
+        </row>
+
+    </div>
+    <row>
+        <div class="container">
+            <div class = "col-md-9">
+                <row>
+                    <div class = "addBox">
+                        <form class = "form-horizontal" role = "form" id = "cadastrarNoticia" name="formCadastrar">
+                            <div class = "form-group" ng-class="{ 'has-error' : formCadastrar.name.$invalid && !formCadastrar.name.$pristine }">
+                                <label for = "txtassunto" class = "col-md-9">
+                                    Assunto
+                                </label>
+                                <div class = "col-md-9">
+                                    <input type = "text" name = "assunto" class="form-control" id ="txtassunto" ng-model="noticia.assunto" ng-required="true">
+                                    <p ng-show="formCadastrar.assunto.$invalid && !formCadastrar.assunto.$pristine"><b><font color="red">Por favor, defina um assunto</font></b></p>
+                                </div>
+                            </div>
+
+                            <div class = "form-group">
+                                <label for = "txtmensagem" class = "col-md-9">
+                                    Mensagem
+                                </label>
+                                <div class = "col-md-9">
+                                    <input type = "text" name = "mensagem" class="form-control" id ="txtmensagem" ng-model="noticia.corpoMsg" ng-required="true">
+                                    <p ng-show="formCadastrar.mensagem.$invalid && !formCadastrar.mensagem.$pristine"><b><font color="red">Por favor, defina uma mensagem</font></b></p>
+                                </div>
+                            </div>
+
+                            <div class = "form-group">
+                                <label for = "txtdata" class = "col-md-9">
+                                    Data
+                                </label>
+                                <div class = "col-md-9">
+                                    <input type = "text" name="data" class="form-control" id ="txtdata" ng-model="noticia.dataPublicacao" ng-required="true">
+                                    <p ng-show="formCadastrar.data.$invalid && !formCadastrar.data.$pristine"><b><font color="red">Por favor, defina uma data</font></b></p>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </row>
+                <br>
+                <row>
+
+                    <button id = "addnoticia" type = "submit" class ="btn" ng-click="adicionarNoticia(noticia)" ng-disabled ="formCadastrar.$invalid">Adicionar Noticia</button>
+                    <span style="color:#C42924; display:none;" class="msgerro" id ="sperro">Preencha todos os campos </span>
+                    <button id = "atualizarnoticia" type = "submit" class ="btn" ng-click="atualizarNoticia(noticia)" ng-disabled ="formCadastrar.$invalid">Salvar mudanças</button>
+                </row>
+            </div>
+        </div>
+
+    </row>
+</div>
+<br>
+<div class="container-fluid-with-baackground2">
+
+    <div class="container">
+        <div class="col-md-2">
+            <a href="#">Contato</a><br>
+            <a href="#">Quem somos</a><br>
+            <a href="#">Fórum</a><br>
+            <a href="#">Suporte</a>
+
+        </div>
+    </div>
+    <container>
+        <center>Copyright © 2016 | Risk Your Life</center>
+    </container>
+</div>
+</body>
+</html>

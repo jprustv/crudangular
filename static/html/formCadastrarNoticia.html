@@ -1,0 +1,47 @@
+<div class="container">
+            <div class = "col-md-9">
+                <row>
+                    <div class = "addBox">
+                        <form class = "form-horizontal" role = "form" id = "cadastrarNoticia">
+                            <div class = "form-group">
+                                <label for = "txtassunto" class = "col-md-9">
+                                    Assunto
+                                </label>
+                                <div class = "col-md-9">
+                                    <input type = "text" class="form-control" id ="txtassunto" ng-model="noticia.assunto" ng-required="true">
+                                    <span style="color:#C42924; display:none;" class="msgerro" id ="spassunto">Por favor, defina um assunto </span>
+                                </div>
+                            </div>
+
+                            <div class = "form-group">
+                                <label for = "txtmensagem" class = "col-md-9">
+                                    Mensagem
+                                </label>
+                                <div class = "col-md-9">
+                                    <input type = "text" class="form-control" id ="txtmensagem" ng-model="noticia.corpoMsg" ng-required="true">
+                                    <span style="color:#C42924; display:none;" class="msgerro" id ="spmensagem">Por favor, defina uma mensagem</span>
+                                </div>
+                            </div>
+
+                            <div class = "form-group">
+                                <label for = "txtdata" class = "col-md-9">
+                                    Data
+                                </label>
+                                <div class = "col-md-9">
+                                    <input type = "text" class="form-control" id ="txtdata" ng-model="noticia.dataPublicacao" ng-required="true">
+                                    <span style="color:#C42924; display:none;" class="msgerro" id ="spdata">Por favor, entre com uma data no formato dd/mm/aaaa</span>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </row>
+                <br>
+                <row>
+
+                    <button id = "addnoticia" type = "submit" class ="btn" ng-click="adicionarNoticia(noticia)" ng-disabled ="cadastrarNoticia.$invalid">Adicionar Noticia</button>
+                    <span style="color:#C42924; display:none;" class="msgerro" id ="sperro">Preencha todos os campos </span>
+                </row>
+            </div>
+        </div>
